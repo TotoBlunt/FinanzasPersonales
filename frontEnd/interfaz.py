@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from logica.gastosingresos import main
-from utils.conexsupabase import init_supabase, get_users, insert_user
+from utils.conexsupabase import init_supabase
+from utils.registrosInicio import get_users, insert_user,verificar_usuario
 
 #Funcion para dar la bienvenida al usuario antes de iniciar sesión
 def welcome():
@@ -29,15 +30,13 @@ def inicio_sesion():
     password = st.text_input("Contraseña", type="password")
 
     if st.button("Ingresar"):
-        if (username == 'jose' and password == '1234') or (username == 'mily' and password == '1234'):
-            st.success("Inicio de sesión exitoso 😃😃")
-            st.session_state.username = username
+        if verificar_usuario(username, password):
+            st.success("Inicio de sesión exitoso 😃")
+            st.session_state['username'] = username
+            # Aquí puedes llamar a la función principal de la app
             main()
         else:
-            st.error("Nombre de usuario o contraseña incorrectos 😞😞")
-
-    if st.button("Regresar"):
-        st.session_state['page'] = 'inicio'
+            st.error("Usuario o contraseña incorrectos 😞")
 
         
 #Funcion para registro de usuario nuevo
