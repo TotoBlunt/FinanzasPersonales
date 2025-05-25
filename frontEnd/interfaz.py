@@ -14,12 +14,13 @@ def welcome():
     st.write("Por favor, inicia sesión para continuar.")
     
 #Funcion para mostrar el formulario de inicio de sesión
-def login_form():
+def inicio_sesion():
     """
     Muestra un formulario de inicio de sesión.
     """
     
     if st.button("Iniciar sesión"):
+        st.session_state['page'] = 'login'
         st.title("Iniciar sesión 😊 ")
         username = st.text_input("Nombre de usuario").lower()
         password = st.text_input("Contraseña", type="password")
@@ -32,9 +33,24 @@ def login_form():
                 # Llamar a la función principal de la aplicación sin perder el estado de la sesión
                 main()
                 return username
+            elif st.button("Regresar"):
+                st.session_state.username = None
         else:
             st.error("Nombre de usuario o contraseña incorrectos 😞😞")
-    elif st.button("Registrarse"):
+    #Boton para regresar a la pantalla de inicio
+    
+            
+    else:
+        st.warning("Por favor, ingresa tus credenciales")
+        
+#Funcion para registro de usuario nuevo
+def registrar():
+    """
+    Muestra un formulario de registro para nuevos usuarios.
+    """
+    
+    if st.button("Registrarse"):
+        st.session_state['page'] = 'registro'
         st.title("Registrarse")
         new_username = st.text_input("Nombre de usuario").lower()
         new_password = st.text_input("Contraseña", type="password")
@@ -54,13 +70,3 @@ def login_form():
                 st.warning("Por favor, completa todos los campos")
         else:
             st.warning("Por favor, completa todos los campos")
-    #Boton para regresar a la pantalla de inicio
-    elif st.button("Regresar"):
-        st.session_state.username = None
-            
-    else:
-        st.warning("Por favor, ingresa tus credenciales")
-        
-# Para ejecutar esta pagina directamente,util para desarrollo individual
-if __name__ == "__main__":
-    login_form()

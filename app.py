@@ -1,12 +1,13 @@
-from frontEnd.interfaz import welcome, login_form
+from frontEnd.interfaz import welcome,inicio_sesion, registrar
 import streamlit as st
-# Configuración de la página
-st.set_page_config(
-    page_title="Finanzas Personales",
-    page_icon="💵",
-    layout="centered",
-    initial_sidebar_state="expanded"
-)
+
+if 'page' not in st.session_state:
+    st.session_state['page'] = 'inicio'
+
+if st.session_state['page'] == 'inicio':
+    welcome()
+elif st.session_state['page'] == 'login':
+    inicio_sesion()
+elif st.session_state['page'] == 'registro':
+    registrar()
     
-welcome()
-login_form()
