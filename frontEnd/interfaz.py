@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from logica.gastosingresos import main
-from utils.conexsupabase import init_supabase, get_users, insert_user,user_exists
+from utils.conexsupabase import init_supabase, get_users, insert_user
 
 #Funcion para dar la bienvenida al usuario antes de iniciar sesión
 def welcome():
