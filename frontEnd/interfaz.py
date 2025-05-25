@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+from logica.gastosingresos import main
 
 #Funcion para dar la bienvenida al usuario antes de iniciar sesión
 def welcome():
@@ -24,6 +25,7 @@ def login_form():
         # Aquí iría la lógica para verificar las credenciales del usuario
         if username == 'jose' and password == '1234' or username == 'mily' and password == '1234':
             st.success("Inicio de sesión exitoso 😃😃")
+            main()
             return username
         else:
             st.error("Nombre de usuario o contraseña incorrectos 😞😞")
