@@ -38,7 +38,7 @@ def get_users():
     """
     supabase = init_supabase()
     try:
-        response = supabase.table("usuarios").select("*").execute()
+        response = supabase.table("Usuarios").select("*").execute()
         if response.status_code == 200:
             return response.data
         else:
@@ -55,7 +55,7 @@ def user_exists(username):
     """
     supabase = init_supabase()
     try:
-        response = supabase.table("usuarios").select("name").eq("name", username).execute()
+        response = supabase.table("Usuarios").select("name").eq("name", username).execute()
         if response.status_code == 200:
             return len(response.data) > 0
         else:
@@ -72,7 +72,7 @@ def insert_user(username, password):
     """
     supabase = init_supabase()
     try:
-        response = supabase.table("usuarios").insert({"name": username, "password": password}).execute()
+        response = supabase.table("Usuarios").insert({"name": username, "password": password}).execute()
         if response.status_code == 201:
             st.success("Usuario registrado exitosamente.")
         else:
