@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from logica.gastosingresos import main
+from utils.conexsupabase import init_supabase, get_users, insert_user
 
 #Funcion para dar la bienvenida al usuario antes de iniciar sesión
 def welcome():
@@ -37,13 +38,25 @@ def login_form():
         st.title("Registrarse")
         new_username = st.text_input("Nombre de usuario").lower()
         new_password = st.text_input("Contraseña", type="password")
-        if new_username and new_password:
-            # Aquí iría la lógica para registrar al nuevo usuario
-            #Guardar el usuario en el supabase registrado
-            # supabase.table('usuarios').insert({"username": new_username, "password": new_password}).execute()
-            # Simulación de registro exitoso
-            st.success("Registro exitoso. Ahora puedes iniciar sesión.")
+        if st.button("Registrar"):
+            # Ingresar el nuevo usuario en la base de datos
+            if new_username and new_password:
+                # Aquí iría la lógica para registrar al nuevo usuario
+                # Por ejemplo, verificar si el nombre de usuario ya existe
+                existing_users = get_users()
+                if any(user['name'] == new_username for user in existing_users):
+                    st.error("El nombre de usuario ya existe. Por favor, elige otro.")
+                else:
+                    # Insertar el nuevo usuario en la base de datos
+                    insert_user(new_username, new_password)
+                    st.success("Registro exitoso. Ahora puedes iniciar sesión.")
+            else:
+                st.warning("Por favor, completa todos los campos")
         else:
             st.warning("Por favor, completa todos los campos")
+    #Boton para regresar a la pantalla de inicio
+    elif st.button("Regresar"):
+        st.session_state.username = None
+            
     else:
         st.warning("Por favor, ingresa tus credenciales")
