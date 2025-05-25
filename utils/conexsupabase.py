@@ -58,7 +58,8 @@ def insert_user(username, password):
             "password": password
         }).execute()
 
-        if response.status_code in [200, 201]:
+        if response.data:
+            st.success("Usuario registrado exitosamente.")
             return True
 
         # Supabase SDK moderno lanza errores como objetos o diccionarios, así que los atrapamos abajo
