@@ -12,61 +12,54 @@ def welcome():
     st.title("Bienvenido a la aplicación de gestión financiera 💵💵")
     st.write("Esta aplicación te ayudará a gestionar tus finanzas personales de manera eficiente. 💰")
     st.write("Por favor, inicia sesión para continuar.")
-    
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Iniciar sesión"):
+            st.session_state['page'] = 'login'
+    with col2:
+        if st.button("Registrarse"):
+            st.session_state['page'] = 'registro'
 #Funcion para mostrar el formulario de inicio de sesión
 def inicio_sesion():
     """
     Muestra un formulario de inicio de sesión.
     """
-    
-    if st.button("Iniciar sesión"):
-        st.session_state['page'] = 'login'
-        st.title("Iniciar sesión 😊 ")
-        username = st.text_input("Nombre de usuario").lower()
-        password = st.text_input("Contraseña", type="password")
-        # Aquí iría la lógica para verificar las credenciales del usuario
-        if st.button("Ingresar"):
-            if username == 'jose' and password == '1234' or username == 'mily' and password == '1234':
-                st.success("Inicio de sesión exitoso 😃😃")
-                #mantener la sesion activa
-                st.session_state.username = username
-                # Llamar a la función principal de la aplicación sin perder el estado de la sesión
-                main()
-                return username
-            elif st.button("Regresar"):
-                st.session_state.username = None
+    st.title("Iniciar sesión 😊")
+    username = st.text_input("Nombre de usuario").lower()
+    password = st.text_input("Contraseña", type="password")
+
+    if st.button("Ingresar"):
+        if (username == 'jose' and password == '1234') or (username == 'mily' and password == '1234'):
+            st.success("Inicio de sesión exitoso 😃😃")
+            st.session_state.username = username
+            main()
         else:
             st.error("Nombre de usuario o contraseña incorrectos 😞😞")
-    #Boton para regresar a la pantalla de inicio
-    
-            
-    else:
-        st.warning("Por favor, ingresa tus credenciales")
+
+    if st.button("Regresar"):
+        st.session_state['page'] = 'inicio'
+
         
 #Funcion para registro de usuario nuevo
 def registrar():
     """
     Muestra un formulario de registro para nuevos usuarios.
     """
-    
-    if st.button("Registrarse"):
-        st.session_state['page'] = 'registro'
-        st.title("Registrarse")
-        new_username = st.text_input("Nombre de usuario").lower()
-        new_password = st.text_input("Contraseña", type="password")
-        if st.button("Registrar"):
-            # Ingresar el nuevo usuario en la base de datos
-            if new_username and new_password:
-                # Aquí iría la lógica para registrar al nuevo usuario
-                # Por ejemplo, verificar si el nombre de usuario ya existe
-                existing_users = get_users()
-                if any(user['name'] == new_username for user in existing_users):
-                    st.error("El nombre de usuario ya existe. Por favor, elige otro.")
-                else:
-                    # Insertar el nuevo usuario en la base de datos
-                    insert_user(new_username, new_password)
-                    st.success("Registro exitoso. Ahora puedes iniciar sesión.")
+    st.title("Registrarse")
+    new_username = st.text_input("Nombre de usuario").lower()
+    new_password = st.text_input("Contraseña", type="password")
+
+    if st.button("Registrar"):
+        if new_username and new_password:
+            existing_users = get_users()
+            if any(user['name'] == new_username for user in existing_users):
+                st.error("El nombre de usuario ya existe. Por favor, elige otro.")
             else:
-                st.warning("Por favor, completa todos los campos")
+                insert_user(new_username, new_password)
+                st.success("Registro exitoso. Ahora puedes iniciar sesión.")
         else:
             st.warning("Por favor, completa todos los campos")
+
+    if st.button("Regresar"):
+        st.session_state['page'] = 'inicio'
+
