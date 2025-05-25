@@ -51,20 +51,28 @@ def get_users():
 
 #Funcion para ingresar un nuevo usuario
 def insert_user(username, password):
-    """
-    Inserta un nuevo usuario en la tabla de usuarios en Supabase.
-    """
     supabase = init_supabase()
     try:
-        response = supabase.table("usuarios").insert({"name": username, "password": password}).execute()
-        if response.status_code == 201:
-            st.success("Usuario registrado exitosamente.")
-        elif response.status_code == 409 or response.status_code == 23505:
-            st.error("El nombre de usuario ya existe. Por favor, elige otro.")
-        else:
-            st.error(f"Error al registrar el usuario: {response.status_code}")
+        response = supabase.table("usuarios").insert({
+            "name": username,
+            "password": password
+        }).execute()
+
+        if response.status_code in [200, 201]:
+            return True
+
+        # Supabase SDK moderno lanza errores como objetos o diccionarios, así que los atrapamos abajo
+        st.error(f"Error al registrar usuario: {response.status_code}")
+        return False
+
     except Exception as e:
-        st.error(f"Error al conectar con Supabase: {e}")
+        error_str = str(e)
+        if "duplicate key" in error_str or '23505' in error_str:
+            st.error("Ese nombre de usuario ya está registrado. Por favor, elige otro.")
+        else:
+            st.error(f"Ocurrió un error inesperado al registrar: {e}")
+        return False
+
         
     
 # Para ejecutar esta pagina directamente,util para desarrollo individual
