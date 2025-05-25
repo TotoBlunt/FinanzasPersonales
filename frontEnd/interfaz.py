@@ -60,3 +60,7 @@ def login_form():
             
     else:
         st.warning("Por favor, ingresa tus credenciales")
+        
+# Para ejecutar esta pagina directamente,util para desarrollo individual
+if __name__ == "__main__":
+    login_form()

@@ -62,3 +62,10 @@ def insert_user(username, password):
             st.error(f"Error al registrar el usuario: {response.status_code}")
     except Exception as e:
         st.error(f"Error al conectar con Supabase: {e}")
+        
+    
+# Para ejecutar esta pagina directamente,util para desarrollo individual
+if __name__ == "__main__":
+    init_supabase()
+    get_users()
+    insert_user("testuser", "testpassword")
