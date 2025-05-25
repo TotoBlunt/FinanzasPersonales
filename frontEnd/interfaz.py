@@ -25,7 +25,10 @@ def login_form():
         # Aquí iría la lógica para verificar las credenciales del usuario
         if username == 'jose' and password == '1234' or username == 'mily' and password == '1234':
             st.success("Inicio de sesión exitoso 😃😃")
-            main()
+            # Inicializar lista de transacciones en session_state
+            if 'transacciones' not in st.session_state:
+                st.session_state.transacciones = []
+                main()
             return username
         else:
             st.error("Nombre de usuario o contraseña incorrectos 😞😞")
