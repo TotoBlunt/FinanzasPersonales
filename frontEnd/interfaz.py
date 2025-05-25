@@ -50,14 +50,12 @@ def registrar():
     new_password = st.text_input("Contraseña", type="password")
 
     if st.button("Registrar"):
-        if new_username and new_password:
-            if user_exists(new_username):
-                st.error("El nombre de usuario ya existe. Por favor, elige otro.")
-            else:
-                insert_user(new_username, new_password)
-                st.success("Registro exitoso. Ahora puedes iniciar sesión.")
+        if not new_username or not new_password:
+            st.warning("Por favor, completa todos los campos.")
         else:
-            st.warning("Por favor, completa todos los campos")
+            success = insert_user(new_username, new_password)
+            if success:
+                st.success("Registro exitoso. Ahora puedes iniciar sesión.")
 
     if st.button("Regresar"):
         st.session_state['page'] = 'inicio'
