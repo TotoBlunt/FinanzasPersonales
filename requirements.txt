@@ -6,3 +6,4 @@ seaborn
 streamlit
 plotly
 plotly_express
+supabase
