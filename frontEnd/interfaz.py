@@ -23,13 +23,14 @@ def login_form():
         username = st.text_input("Nombre de usuario").lower()
         password = st.text_input("Contraseña", type="password")
         # Aquí iría la lógica para verificar las credenciales del usuario
-        if username == 'jose' and password == '1234' or username == 'mily' and password == '1234':
-            st.success("Inicio de sesión exitoso 😃😃")
-            #mantener la sesion activa
-            st.session_state.username = username
-            # Llamar a la función principal de la aplicación sin perder el estado de la sesión
-            main()
-            return username
+        if st.button("Ingresar"):
+            if username == 'jose' and password == '1234' or username == 'mily' and password == '1234':
+                st.success("Inicio de sesión exitoso 😃😃")
+                #mantener la sesion activa
+                st.session_state.username = username
+                # Llamar a la función principal de la aplicación sin perder el estado de la sesión
+                main()
+                return username
         else:
             st.error("Nombre de usuario o contraseña incorrectos 😞😞")
     elif st.button("Registrarse"):
