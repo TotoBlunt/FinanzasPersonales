@@ -46,12 +46,11 @@ def registrar():
     Muestra un formulario de registro para nuevos usuarios.
     """
     st.title("Registrarse")
-    new_username = st.text_input("Nombre de usuario").lower()
+    new_username = st.text_input("Nombre de usuario").strip().lower()
     new_password = st.text_input("Contraseña", type="password")
 
     if st.button("Registrar"):
         if new_username and new_password:
-            
             if user_exists(new_username):
                 st.error("El nombre de usuario ya existe. Por favor, elige otro.")
             else:
