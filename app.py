@@ -1,8 +1,12 @@
 from frontEnd.interfaz import welcome, login_form
 import streamlit as st
-# Inicializar lista de transacciones en session_state
-if 'transacciones' not in st.session_state:
-    st.session_state.transacciones = []
+# Configuración de la página
+st.set_page_config(
+    page_title="Finanzas Personales",
+    page_icon="💵",
+    layout="centered",
+    initial_sidebar_state="expanded"
+)
     
-    welcome()
-    login_form()
+welcome()
+login_form()
