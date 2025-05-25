@@ -47,6 +47,23 @@ def get_users():
     except Exception as e:
         st.error(f"Error al conectar con Supabase: {e}")
         return []
+    
+#Funcion para verificar si un usuario existe
+def user_exists(username):
+    """
+    Verifica si un usuario ya existe en la tabla de usuarios en Supabase.
+    """
+    supabase = init_supabase()
+    try:
+        response = supabase.table("usuarios").select("name").eq("name", username).execute()
+        if response.status_code == 200:
+            return len(response.data) > 0
+        else:
+            st.error(f"Error al verificar el usuario: {response.status_code}")
+            return False
+    except Exception as e:
+        st.error(f"Error al conectar con Supabase: {e}")
+        return False
 
 #Funcion para ingresar un nuevo usuario
 def insert_user(username, password):

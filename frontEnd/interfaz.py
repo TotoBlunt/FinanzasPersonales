@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 from logica.gastosingresos import main
-from utils.conexsupabase import init_supabase, get_users, insert_user
+from utils.conexsupabase import init_supabase, get_users, insert_user,user_exists
 
 #Funcion para dar la bienvenida al usuario antes de iniciar sesión
 def welcome():
@@ -51,8 +51,8 @@ def registrar():
 
     if st.button("Registrar"):
         if new_username and new_password:
-            existing_users = get_users()
-            if any(user['name'] == new_username for user in existing_users):
+            
+            if user_exists(new_username):
                 st.error("El nombre de usuario ya existe. Por favor, elige otro.")
             else:
                 insert_user(new_username, new_password)
