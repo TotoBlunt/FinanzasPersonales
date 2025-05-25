@@ -17,11 +17,11 @@ def login_form():
     """
     Muestra un formulario de inicio de sesión.
     """
-    st.title("Iniciar sesión 😊 ")
-    username = st.text_input("Nombre de usuario").lower()
-    password = st.text_input("Contraseña", type="password")
     
     if st.button("Iniciar sesión"):
+        st.title("Iniciar sesión 😊 ")
+        username = st.text_input("Nombre de usuario").lower()
+        password = st.text_input("Contraseña", type="password")
         # Aquí iría la lógica para verificar las credenciales del usuario
         if username == 'jose' and password == '1234' or username == 'mily' and password == '1234':
             st.success("Inicio de sesión exitoso 😃😃")
@@ -32,5 +32,17 @@ def login_form():
             return username
         else:
             st.error("Nombre de usuario o contraseña incorrectos 😞😞")
+    elif st.button("Registrarse"):
+        st.title("Registrarse")
+        new_username = st.text_input("Nombre de usuario").lower()
+        new_password = st.text_input("Contraseña", type="password")
+        if new_username and new_password:
+            # Aquí iría la lógica para registrar al nuevo usuario
+            #Guardar el usuario en el supabase registrado
+            # supabase.table('usuarios').insert({"username": new_username, "password": new_password}).execute()
+            # Simulación de registro exitoso
+            st.success("Registro exitoso. Ahora puedes iniciar sesión.")
+        else:
+            st.warning("Por favor, completa todos los campos")
     else:
         st.warning("Por favor, ingresa tus credenciales")
