@@ -2,12 +2,10 @@ import streamlit as st
 from datetime import datetime
 
 def inicializar_datos():
-    """Inicializa las transacciones si no existen"""
     if 'transacciones' not in st.session_state:
         st.session_state.transacciones = []
 
 def agregar_transaccion(tipo, monto, categoria, descripcion):
-    """Agrega una nueva transacción a la lista"""
     nueva_transaccion = {
         'tipo': tipo,
         'monto': monto,
@@ -18,14 +16,12 @@ def agregar_transaccion(tipo, monto, categoria, descripcion):
     st.session_state.transacciones.append(nueva_transaccion)
 
 def calcular_totales():
-    """Calcula los totales de ingresos y gastos"""
     ingresos = sum(t['monto'] for t in st.session_state.transacciones if t['tipo'] == 'Ingreso')
     gastos = sum(t['monto'] for t in st.session_state.transacciones if t['tipo'] == 'Gasto')
     balance = ingresos - gastos
     return ingresos, gastos, balance
 
 def mostrar_formulario():
-    """Muestra el formulario para agregar transacciones"""
     with st.sidebar:
         st.header("Agregar Transacción")
         tipo = st.radio("Tipo:", ("Ingreso", "Gasto"))
@@ -37,12 +33,12 @@ def mostrar_formulario():
             if monto > 0 and categoria:
                 agregar_transaccion(tipo, monto, categoria, descripcion)
                 st.success("Transacción agregada!")
+                st.experimental_rerun()  # REFRESCAR para mostrar actualización
             else:
                 st.warning("Debes ingresar monto y categoría")
 
 def mostrar_resumen():
-    """Muestra el resumen financiero"""
-    st.title("💰 Mis Finanzas Personales")
+    st.title(f"💰 Finanzas Personales de {st.session_state['username']}")
     
     ingresos, gastos, balance = calcular_totales()
     
@@ -55,7 +51,6 @@ def mostrar_resumen():
     st.subheader(f"Balance: ${balance:,.2f}", divider="rainbow")
 
 def mostrar_ultimas_transacciones():
-    """Muestra las últimas transacciones"""
     st.subheader("Últimas Transacciones")
     if st.session_state.transacciones:
         for t in reversed(st.session_state.transacciones[-10:]):
@@ -72,11 +67,19 @@ def mostrar_ultimas_transacciones():
         st.info("No hay transacciones registradas aún")
 
 def main():
-    """Función principal que orquesta la aplicación"""
+    if 'username' not in st.session_state:
+        st.warning("No has iniciado sesión. Por favor, inicia sesión para continuar.")
+        # Aquí podrías redirigir al login o detener la app
+        return
+    
     inicializar_datos()
     mostrar_formulario()
     mostrar_resumen()
     mostrar_ultimas_transacciones()
+
+    if st.button("Cerrar sesión"):
+        del st.session_state['username']
+        st.experimental_rerun()
 
 if __name__ == "__main__":
     main()
