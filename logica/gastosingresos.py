@@ -85,8 +85,8 @@ def mostrar_ultimas_transacciones():
         st.session_state.refrescar = not st.session_state.refrescar'''
         
 def main():
-    if 'user_id' in st.session_state:
-        usuario_id = st.session_state['user_id']
+    if 'usuario_id' in st.session_state:
+        usuario_id = st.session_state['usuario_id']
         mostrar_formulario(usuario_id)
         mostrar_resumen(usuario_id)
 
