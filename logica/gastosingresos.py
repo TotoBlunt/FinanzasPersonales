@@ -4,6 +4,8 @@ from datetime import datetime
 def inicializar_datos():
     if 'transacciones' not in st.session_state:
         st.session_state.transacciones = []
+    if 'refrescar' not in st.session_state:
+        st.session_state.refrescar = False  # variable para forzar recarga
 
 def agregar_transaccion(tipo, monto, categoria, descripcion):
     nueva_transaccion = {
@@ -14,6 +16,8 @@ def agregar_transaccion(tipo, monto, categoria, descripcion):
         'fecha': datetime.now().strftime("%d/%m/%Y %H:%M")
     }
     st.session_state.transacciones.append(nueva_transaccion)
+    # Cambiamos esta variable para que Streamlit recargue la app
+    st.session_state.refrescar = not st.session_state.refrescar
 
 def calcular_totales():
     ingresos = sum(t['monto'] for t in st.session_state.transacciones if t['tipo'] == 'Ingreso')
@@ -33,7 +37,6 @@ def mostrar_formulario():
             if monto > 0 and categoria:
                 agregar_transaccion(tipo, monto, categoria, descripcion)
                 st.success("Transacción agregada!")
-                st.experimental_rerun()  # REFRESCAR para mostrar actualización
             else:
                 st.warning("Debes ingresar monto y categoría")
 
@@ -69,7 +72,6 @@ def mostrar_ultimas_transacciones():
 def main():
     if 'username' not in st.session_state:
         st.warning("No has iniciado sesión. Por favor, inicia sesión para continuar.")
-        # Aquí podrías redirigir al login o detener la app
         return
     
     inicializar_datos()
@@ -79,7 +81,8 @@ def main():
 
     if st.button("Cerrar sesión"):
         del st.session_state['username']
-        st.experimental_rerun()
+        # Forzar recarga al cerrar sesión
+        st.session_state.refrescar = not st.session_state.refrescar
 
 if __name__ == "__main__":
     main()
