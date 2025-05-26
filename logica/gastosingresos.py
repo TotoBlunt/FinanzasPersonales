@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import datetime
-from ui import mostrar_formulario, mostrar_resumen
+from logica.ui import mostrar_formulario, mostrar_resumen
 def inicializar_datos():
     if 'transacciones' not in st.session_state:
         st.session_state.transacciones = []
