@@ -1,6 +1,6 @@
 import streamlit as st
 from datetime import datetime
-
+from ui import mostrar_formulario, mostrar_resumen
 def inicializar_datos():
     if 'transacciones' not in st.session_state:
         st.session_state.transacciones = []
@@ -69,7 +69,7 @@ def mostrar_ultimas_transacciones():
     else:
         st.info("No hay transacciones registradas aún")
 
-def main():
+'''def main():
     if 'username' not in st.session_state:
         st.warning("No has iniciado sesión. Por favor, inicia sesión para continuar.")
         return
@@ -82,7 +82,20 @@ def main():
     if st.button("Cerrar sesión"):
         del st.session_state['username']
         # Forzar recarga al cerrar sesión
-        st.session_state.refrescar = not st.session_state.refrescar
+        st.session_state.refrescar = not st.session_state.refrescar'''
+        
+def main():
+    if 'usuario_id' in st.session_state:
+        usuario_id = st.session_state['usuario_id']
+        mostrar_formulario(usuario_id)
+        mostrar_resumen(usuario_id)
+
+        if st.button("Cerrar sesión"):
+            del st.session_state['username']
+            del st.session_state['usuario_id']
+            st.experimental_rerun()
+    else:
+        st.warning("Sesión no iniciada.")
 
 if __name__ == "__main__":
     main()
