@@ -4,6 +4,7 @@ from datetime import datetime
 from logica.gastosingresos import main
 from utils.conexsupabase import init_supabase
 from utils.registrosInicio import get_users, insert_user,verificar_usuario
+from time import sleep
 
 #Funcion para dar la bienvenida al usuario antes de iniciar sesión
 def welcome():
@@ -20,6 +21,12 @@ def welcome():
     with col2:
         if st.button("Registrarse"):
             st.session_state['page'] = 'registro'
+
+def force_rerun():
+    sleep(0.1)  # Pequeño delay para evitar bugs
+    raise st.script_runner.RerunException(st.script_request_queue.RerunData(None))
+
+
 def inicio_sesion():
     st.title("Iniciar sesión 😊")
     username = st.text_input("Nombre de usuario").lower()
@@ -30,7 +37,7 @@ def inicio_sesion():
             st.session_state['username'] = username
             st.session_state['page'] = 'app'  # Cambia la página
             st.success("Inicio de sesión exitoso 😃")
-            st.experimental_rerun()  # ¡Forzar la rerenderización aquí!
+            force_rerun()  # ¡Forzar la rerenderización aquí!
         else:
             st.error("Usuario o contraseña incorrectos 😞")
 
