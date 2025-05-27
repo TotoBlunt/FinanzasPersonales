@@ -86,6 +86,7 @@ def mostrar_ultimas_transacciones():
         
 def main():
     if 'usuario_id' in st.session_state:
+        st.title(f"Bienvenido, {st.session_state['username']}")
         usuario_id = st.session_state['usuario_id']
         mostrar_formulario(usuario_id)
         mostrar_resumen(usuario_id)
