@@ -30,11 +30,13 @@ def inicio_sesion():
             st.session_state['username'] = username
             st.session_state['page'] = 'app'  # Cambia la página
             st.success("Inicio de sesión exitoso 😃")
+            st.experimental_rerun()  # ¡Forzar la rerenderización aquí!
         else:
             st.error("Usuario o contraseña incorrectos 😞")
 
     if st.button("Volver"):
         st.session_state['page'] = 'inicio'
+        st.experimental_rerun()  # También aplica para el botón "Volver"
 
 
         
