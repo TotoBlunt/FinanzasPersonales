@@ -101,5 +101,3 @@ def main():
     else:
         st.warning("Sesión no iniciada.")
 
-if __name__ == "__main__":
-    main()
