@@ -6,14 +6,13 @@ if 'page' not in st.session_state:
     st.session_state['page'] = 'inicio'
 
 if 'username' in st.session_state:
-    # Usuario logueado, mostrar app principal
+    st.session_state['page'] = 'app'  # Página principal de la app
+
+if st.session_state['page'] == 'app':
     main()
-else:
-    # Usuario no logueado, mostrar pantallas de bienvenida, login o registro
-    if st.session_state['page'] == 'inicio':
-        welcome()
-    elif st.session_state['page'] == 'login':
-        inicio_sesion()
-    elif st.session_state['page'] == 'registro':
-        registrar()
-    
+elif st.session_state['page'] == 'inicio':
+    welcome()
+elif st.session_state['page'] == 'login':
+    inicio_sesion()
+elif st.session_state['page'] == 'registro':
+    registrar()

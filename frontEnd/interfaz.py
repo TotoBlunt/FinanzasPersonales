@@ -33,8 +33,7 @@ def inicio_sesion():
         if verificar_usuario(username, password):
             st.success("Inicio de sesión exitoso 😃")
             st.session_state['username'] = username
-            # Aquí puedes llamar a la función principal de la app
-            main()
+            st.session_state['page'] = 'app'  # Redireccionamos a la página principal
         else:
             st.error("Usuario o contraseña incorrectos 😞")
 
