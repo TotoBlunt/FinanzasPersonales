@@ -34,7 +34,7 @@ def inicio_sesion():
             st.success("Inicio de sesión exitoso 😃")
             st.session_state['username'] = username
             st.session_state['page'] = 'app'  # Redireccionamos a la página principal
-            #st.query_params(page="app")  # Opcional para control de navegación
+            
             st.stop()  # Detiene la ejecución para que en el próximo ciclo se cargue `main()`
         else:
             st.error("Usuario o contraseña incorrectos 😞")
