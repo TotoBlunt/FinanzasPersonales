@@ -22,9 +22,7 @@ def welcome():
         if st.button("Registrarse"):
             st.session_state['page'] = 'registro'
 
-def force_rerun():
-    sleep(0.1)  # Pequeño delay para evitar bugs
-    raise st.script_runner.RerunException(st.script_request_queue.RerunData(None))
+
 
 
 def inicio_sesion():
@@ -37,13 +35,13 @@ def inicio_sesion():
             st.session_state['username'] = username
             st.session_state['page'] = 'app'  # Cambia la página
             st.success("Inicio de sesión exitoso 😃")
-            force_rerun()  # ¡Forzar la rerenderización aquí!
+            st.rerun()  # ¡Forzar la rerenderización aquí!
         else:
             st.error("Usuario o contraseña incorrectos 😞")
 
     if st.button("Volver"):
         st.session_state['page'] = 'inicio'
-        st.experimental_rerun()  # También aplica para el botón "Volver"
+        st.rerun()  # También aplica para el botón "Volver"
 
 
         
