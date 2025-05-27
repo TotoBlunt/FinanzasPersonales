@@ -20,23 +20,22 @@ def welcome():
     with col2:
         if st.button("Registrarse"):
             st.session_state['page'] = 'registro'
-#Funcion para mostrar el formulario de inicio de sesión
 def inicio_sesion():
-    """
-    Muestra un formulario de inicio de sesión.
-    """
     st.title("Iniciar sesión 😊")
     username = st.text_input("Nombre de usuario").lower()
     password = st.text_input("Contraseña", type="password")
 
     if st.button("Ingresar"):
         if verificar_usuario(username, password):
-            st.success("Inicio de sesión exitoso 😃")
             st.session_state['username'] = username
-            st.session_state['page'] = 'app'  # Redireccionamos a la página principal
-            st.stop()  # Detiene la ejecución para que en el próximo ciclo se cargue `main()`
+            st.session_state['page'] = 'app'  # Cambia la página
+            st.success("Inicio de sesión exitoso 😃")
         else:
             st.error("Usuario o contraseña incorrectos 😞")
+
+    if st.button("Volver"):
+        st.session_state['page'] = 'inicio'
+
 
         
 #Funcion para registro de usuario nuevo
