@@ -14,5 +14,6 @@ elif st.session_state['page'] == 'inicio':
     welcome()
 elif st.session_state['page'] == 'login':
     inicio_sesion()
+    main()
 elif st.session_state['page'] == 'registro':
     registrar()
