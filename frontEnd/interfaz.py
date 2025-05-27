@@ -30,7 +30,6 @@ def inicio_sesion():
             st.session_state['username'] = username
             st.session_state['page'] = 'app'  # Cambia la página
             st.success("Inicio de sesión exitoso 😃")
-            main()
         else:
             st.error("Usuario o contraseña incorrectos 😞")
 
