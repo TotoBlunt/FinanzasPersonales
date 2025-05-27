@@ -85,9 +85,6 @@ def mostrar_ultimas_transacciones():
         st.session_state.refrescar = not st.session_state.refrescar'''
         
 def main():
-    if 'username' not in st.session_state:
-        st.warning("Sesión no iniciada.")
-        return
     if 'usuario_id' in st.session_state:
         st.title(f"Bienvenido, {st.session_state['username']}")
         usuario_id = st.session_state['usuario_id']
@@ -97,7 +94,7 @@ def main():
         if st.button("Cerrar sesión"):
             del st.session_state['username']
             del st.session_state['usuario_id']
-            st.experimental_rerun()
+            st.rerun()
     else:
         st.warning("Sesión no iniciada.")
 
